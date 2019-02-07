@@ -1,9 +1,9 @@
-package Models.Order.Clothes.Enums.ForUserChoice;
+package Models.Order.Enums;
 
-public enum Availabilities {
+public enum Manufacturers {
     
     DEFAULT(),
-    IN_STOCK( "In stock" );
+    FASHION( "Fashion" );
     
     private int    number;
     private String description;
@@ -16,12 +16,12 @@ public enum Availabilities {
         this.description = description;
     }
     
-    Availabilities() {
+    Manufacturers() {
         this.setNumber( ordinal() );
         this.setDescription( "None" );
     }
     
-    Availabilities( String description ) {
+    Manufacturers( String description ) {
         this.setNumber( this.ordinal() );
         this.setDescription( description );
     }
@@ -33,4 +33,6 @@ public enum Availabilities {
     public String getDescription() {
         return this.description;
     }
+    
+    
 }

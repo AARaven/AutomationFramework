@@ -1,6 +1,6 @@
 package com.automationpractice.Forms.FilterForms;
 
-import Models.Order.Clothes.Enums.ForUserChoice.Conditions;
+import Models.Order.Enums.Conditions;
 import com.automationpractice.Pages.SecondaryPages.CategoryPage;
 import lombok.AccessLevel;
 import lombok.Getter;

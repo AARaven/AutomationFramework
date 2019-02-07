@@ -1,11 +1,11 @@
-package Models.Order.Clothes.Enums.ForOrdering;
+package Models.Order.Enums;
 
-public enum Sizes {
+public enum Compositions {
     
     DEFAULT(),
-    S( "Small" ),
-    M( "Medium" ),
-    L( "Large" );
+    COTTON( "Cotton" ),
+    POLYESTER( "Polyester" ),
+    VISCOSE( "Viscose" );
     
     private int    number;
     private String description;
@@ -18,12 +18,12 @@ public enum Sizes {
         this.description = description;
     }
     
-    Sizes() {
+    Compositions() {
         this.setNumber( ordinal() );
         this.setDescription( "None" );
     }
     
-    Sizes( String description ) {
+    Compositions( String description ) {
         this.setNumber( this.ordinal() );
         this.setDescription( description );
     }

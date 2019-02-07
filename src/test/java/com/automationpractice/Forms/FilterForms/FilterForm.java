@@ -1,6 +1,6 @@
 package com.automationpractice.Forms.FilterForms;
 
-import Models.Order.Clothes.Clothes;
+import Models.Order.Clothes;
 import Models.Order.Filter;
 import com.automationpractice.Pages.SecondaryPages.CategoryPage;
 import lombok.AccessLevel;
@@ -9,10 +9,10 @@ import lombok.Setter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
+@Getter( AccessLevel.PRIVATE )
+@Setter( AccessLevel.PRIVATE )
 public class FilterForm {
     
-    @Getter( AccessLevel.PRIVATE )
-    @Setter( AccessLevel.PRIVATE )
     private WebDriver driver;
     
     private AvailabilityForm getAvailabilityForm() {

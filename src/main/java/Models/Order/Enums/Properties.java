@@ -1,9 +1,12 @@
-package Models.Order.Clothes.Enums.ForUserChoice;
+package Models.Order.Enums;
 
-public enum Conditions {
+public enum Properties {
     
     DEFAULT(),
-    NEW( "New" );
+    COLORFUL( "Colorful" ),
+    MAXI( "Maxi" ),
+    MIDI( "Midi" ),
+    SHORT( "Short" );
     
     private int    number;
     private String description;
@@ -16,12 +19,12 @@ public enum Conditions {
         this.description = description;
     }
     
-    Conditions() {
+    Properties() {
         this.setNumber( ordinal() );
         this.setDescription( "None" );
     }
     
-    Conditions( String description ) {
+    Properties( String description ) {
         this.setNumber( this.ordinal() );
         this.setDescription( description );
     }

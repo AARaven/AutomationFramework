@@ -1,6 +1,6 @@
 package com.automationpractice.Forms.ContentForms;
 
-import Models.Order.Clothes.Clothes;
+import Models.Order.Clothes;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +23,7 @@ public class ProductForm {
     @FindBy( css = "a[class='quick-view']" )   private  List < WebElement > buttonsQuickView;
     @FindBy( css = "a[title='View']" )         private  List < WebElement > buttonsMore;
     
-    private void findButton( List < WebElement > buttons ) {
+    private void clickQueryButton( List < WebElement > buttons ) {
         buttons.stream()
                .filter( WebElement :: isDisplayed )
                .findFirst()
@@ -53,17 +53,17 @@ public class ProductForm {
     }
     
     public ProductForm clickAddToCart() {
-        this.findButton( this.getButtonsAddToCart() );
+        this.clickQueryButton( this.getButtonsAddToCart() );
         return this;
     }
     
     public ProductForm clickQuickView() {
-        this.findButton( this.getButtonsQuickView() );
+        this.clickQueryButton( this.getButtonsQuickView() );
         return this;
     }
     
     public ProductForm clickMore() {
-        this.findButton( this.getButtonsMore() );
+        this.clickQueryButton( this.getButtonsMore() );
         return this;
     }
     

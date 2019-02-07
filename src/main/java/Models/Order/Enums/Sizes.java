@@ -1,10 +1,11 @@
-package Models.Order.Clothes.Enums.ForUserChoice;
+package Models.Order.Enums;
 
-public enum Categories {
+public enum Sizes {
     
-    CASUAL( "Casual" ),
-    EVENING( "Evening" ),
-    SUMMER( "Summer" );
+    DEFAULT(),
+    S( "Small" ),
+    M( "Medium" ),
+    L( "Large" );
     
     private int    number;
     private String description;
@@ -17,7 +18,12 @@ public enum Categories {
         this.description = description;
     }
     
-    Categories( String description ) {
+    Sizes() {
+        this.setNumber( ordinal() );
+        this.setDescription( "None" );
+    }
+    
+    Sizes( String description ) {
         this.setNumber( this.ordinal() );
         this.setDescription( description );
     }

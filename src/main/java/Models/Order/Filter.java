@@ -1,10 +1,6 @@
 package Models.Order;
 
-import Models.Order.Clothes.Enums.ForOrdering.Colours;
-import Models.Order.Clothes.Enums.ForOrdering.Compositions;
-import Models.Order.Clothes.Enums.ForOrdering.Properties;
-import Models.Order.Clothes.Enums.ForOrdering.Sizes;
-import Models.Order.Clothes.Enums.ForUserChoice.*;
+import Models.Order.Enums.*;
 import lombok.*;
 
 @Getter( value = AccessLevel.PUBLIC )

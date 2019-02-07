@@ -1,16 +1,11 @@
-package Models.Order.Clothes.Enums.ForOrdering;
+package Models.Order.Enums;
 
-public enum Colours {
+public enum Styles {
     
     DEFAULT(),
-    BEIGE( "Beige" ),
-    BLACK( "Black" ),
-    BLUE( "Blue" ),
-    GREEN( "Green" ),
-    ORANGE( "Orange" ),
-    PINK( "Pink" ),
-    WHITE( "White" ),
-    YELLOW( "Yellow" );
+    CASUAL( "Casual" ),
+    DRESSY( "Dressy" ),
+    GIRLY( "Girly" );
     
     private int    number;
     private String description;
@@ -23,12 +18,12 @@ public enum Colours {
         this.description = description;
     }
     
-    Colours() {
+    Styles() {
         this.setNumber( ordinal() );
         this.setDescription( "None" );
     }
     
-    Colours( String description ) {
+    Styles( String description ) {
         this.setNumber( this.ordinal() );
         this.setDescription( description );
     }
