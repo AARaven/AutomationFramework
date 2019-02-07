@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="OrderingTests" verbose="2"  >
+
+    <test name="AddingToCart" >
+        <classes>
+
+            <class name="com.automationpractice.Tests.Positive.AccountTest">
+                <methods>
+                    <include name="testAuthorization"/>
+                </methods>
+            </class>
+
+            <class name="com.automationpractice.Tests.Positive.CartManageTest">
+                <methods>
+                    <include name="testSelectOrder"/>
+                </methods>
+            </class>
+
+        </classes>
+    </test>
+
+</suite>
