@@ -1,6 +1,7 @@
 package com.automationpractice.Forms.ContentForms;
 
 import Models.Order.Clothes;
+import com.automationpractice.Utils.FrameWorkUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,23 +13,16 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-@Getter( AccessLevel.PRIVATE )
+@Getter ( AccessLevel.PROTECTED )
 public class ProductForm {
     
-    @Setter( AccessLevel.PRIVATE )
+    @Setter ( AccessLevel.PROTECTED )
     private WebDriver driver;
     
-    @FindBy( css = "a[class='product-name']" ) private  List < WebElement > containerProducts;
-    @FindBy( css = "a[title='Add to cart']" )  private  List < WebElement > buttonsAddToCart;
-    @FindBy( css = "a[class='quick-view']" )   private  List < WebElement > buttonsQuickView;
-    @FindBy( css = "a[title='View']" )         private  List < WebElement > buttonsMore;
-    
-    private void clickQueryButton( List < WebElement > buttons ) {
-        buttons.stream()
-               .filter( WebElement :: isDisplayed )
-               .findFirst()
-               .ifPresent( WebElement :: click );
-    }
+    @FindBy ( css = "a[class='product-name']" ) private List < WebElement > containerProducts;
+    @FindBy ( css = "a[title='Add to cart']" ) private  List < WebElement > buttonsAddToCart;
+    @FindBy ( css = "a[class='quick-view']" ) private   List < WebElement > buttonsQuickView;
+    @FindBy ( css = "a[title='View']" ) private         List < WebElement > buttonsMore;
     
     public ProductForm navigateToProduct( Clothes clothes ) {
         this.getContainerProducts().stream()
@@ -41,7 +35,7 @@ public class ProductForm {
         return this;
     }
     
-    public ProductForm navigateToProduct( String  clothes ) {
+    public ProductForm navigateToProduct( String clothes ) {
         this.getContainerProducts().stream()
             .filter( webElement -> webElement.getAttribute( "title" )
                                              .contains( clothes ) )
@@ -52,23 +46,23 @@ public class ProductForm {
         return this;
     }
     
-    public ProductForm clickAddToCart() {
-        this.clickQueryButton( this.getButtonsAddToCart() );
-        return this;
+    public AddCartContainer clickAddToCart() {
+        FrameWorkUtils.clickElementFromList( this.getButtonsAddToCart() );
+        return new AddCartContainer( getDriver() );
     }
     
     public ProductForm clickQuickView() {
-        this.clickQueryButton( this.getButtonsQuickView() );
+        FrameWorkUtils.clickElementFromList( this.getButtonsQuickView() );
         return this;
     }
     
     public ProductForm clickMore() {
-        this.clickQueryButton( this.getButtonsMore() );
+        FrameWorkUtils.clickElementFromList( this.getButtonsMore() );
         return this;
     }
     
     public ProductForm( WebDriver driver ) {
         this.setDriver( driver );
-        PageFactory.initElements( driver, this );
+        PageFactory.initElements( driver , this );
     }
 }

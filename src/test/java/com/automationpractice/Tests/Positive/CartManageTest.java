@@ -1,21 +1,23 @@
 package com.automationpractice.Tests.Positive;
 
+import Models.Order.Clothes;
+import Models.Order.Enums.*;
+import Models.Order.Filter;
 import Models.Order.Order;
 import Models.User.User;
 import com.automationpractice.Data.UserData;
-import com.automationpractice.Pages.HomePage;
+import com.automationpractice.Forms.ContentForms.ProductForm;
 import com.automationpractice.Pages.SecondaryPages.CategoryPage;
+import com.automationpractice.Pages.SecondaryPages.OrderPage;
 import com.automationpractice.Tests.BaseTest;
 import io.qameta.allure.Step;
 import org.testng.annotations.Test;
 
 public class CartManageTest extends BaseTest {
     
-    @Step( "pre-alfa" )
-    @Test( description = "Test that implements ordering (adding to cart)",
-           dataProvider = "UserAndOrder", dataProviderClass = UserData.class )
-    public void testSelectOrder( User user, Order order ) {
-        
+    @Step ( "Add products to the cart" )
+    @Test ( description = "Test that implements filtering categories and adding to cart." )
+    public void testAddingProductsInTheCart() {
         CategoryPage categoryPage = new CategoryPage( getDriver() );
         
         categoryPage
@@ -23,25 +25,72 @@ public class CartManageTest extends BaseTest {
         
         categoryPage
                 .getFilterForm()
-                .filter( order.getClothes()
-                              .get( 0 ) );
-        
-        categoryPage
-                .getProductForm()
-                .navigateToProduct( order.getClothes()
-                                         .get( 0 ) )
-                .clickAddToCart();
-        
-        // TODO: 07.02.2019
+                .filter( new Filter( Availabilities.IN_STOCK , Categories.DEFAULT , Colours.BLACK ,
+                                     Compositions.COTTON , Conditions.NEW , Manufacturers.FASHION ,
+                                     Properties.SHORT , Sizes.M , Styles.CASUAL ) )
+                
+                .getProductForm().navigateToProduct( "Blouse" )
+                .clickAddToCart().clickButtonContinue()
+                .getCartForm().clickCart();
     }
     
-    @Test
-    public void testExample() {
-        HomePage home = new HomePage( getDriver() );
+    @Step ( "Verify products in the cart" )
+    @Test ( description = "Test that implements ordering (adding to cart)",
+            dataProvider = "UserAndOrder", dataProviderClass = UserData.class )
+    public void testVerifyingProductsInTheCart( User user , Order order ) {
         
-        home.openPage();
+        CategoryPage categoryPage = new CategoryPage( getDriver() );
+        OrderPage    orderPage    = new OrderPage( getDriver() );
         
-        home.getProductForm().navigateToProduct( "" ).clickMore();
+        categoryPage
+                .openPage();
         
+        for ( Clothes clothes : order.getClothes() ) {
+            
+            categoryPage
+                    .getProductForm()
+                    .navigateToProduct( clothes )
+                    .clickAddToCart()
+                    .clickButtonContinue();
+        }
+        
+        categoryPage
+                .getCartForm()
+                .clickCart();
+        
+        orderPage
+                .clickButtonProceedToCheckout()
+                .clickProcessAddress()
+                .clickButtonProceedToCheckout();
+    }
+    
+    @Step ( "Verify products in the cart" )
+    @Test ( description = "Test that implements ordering (adding to cart)",
+            dataProvider = "UserAndOrder", dataProviderClass = UserData.class )
+    public void testEditingCartContent( User user , Order order ) {
+        
+        CategoryPage categoryPage = new CategoryPage( getDriver() );
+        OrderPage    orderPage    = new OrderPage( getDriver() );
+        ProductForm productForm = new ProductForm( getDriver() );
+        
+        categoryPage
+                .openPage();
+        
+        for ( Clothes clothes : order.getClothes() ) {
+            
+           productForm
+                    .navigateToProduct( clothes )
+                    .clickAddToCart()
+                    .clickButtonContinue();
+        }
+        
+        categoryPage
+                .getCartForm()
+                .clickCart();
+        
+        orderPage
+                .clickButtonProceedToCheckout()
+                .clickProcessAddress()
+                .clickButtonProceedToCheckout();
     }
 }

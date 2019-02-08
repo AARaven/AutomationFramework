@@ -33,14 +33,14 @@ public class ScreenShot implements ITestListener {
         
         if ( driver != null ) {
             File f = ( ( TakesScreenshot ) driver ).getScreenshotAs( OutputType.FILE );
-            FileUtils.copyFile( f, new File( "./src/test/screenshot.jpeg" ) );
+            FileUtils.copyFile( f , new File( "./src/test/screenshot.jpeg" ) );
             byte[] fileContent = Files.readAllBytes( f.toPath() );
             saveScreenshotJPG( fileContent );
             
         }
     }
     
-    @Attachment( value = "WebPage screenshot", type = "image/jpg" )
+    @Attachment ( value = "WebPage screenshot", type = "image/jpg" )
     private byte[] saveScreenshotJPG( byte[] screenShot ) {
         return screenShot;
     }

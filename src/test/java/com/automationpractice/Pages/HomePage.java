@@ -9,10 +9,10 @@ import org.openqa.selenium.WebDriver;
 
 public class HomePage extends BasePage {
     
-    // TODO: 07.02.2019
-    public ProductForm getProductForm() {
-        return new ProductForm( getDriver() );
-    }
+
+//    public ProductForm getProductForm() {
+//        return new ProductForm( getDriver() );
+//    }
     
     public AccountRowForm getAccountRow() {
         return new AccountRowForm( getDriver() );

@@ -42,6 +42,8 @@ public class CategoryForm {
     
     public FilterForm filter( Categories categories ) {
         switch ( categories ) {
+            case DEFAULT:
+                break;
             case CASUAL:
                 this.getCheckboxCasualDresses().click();
                 break;

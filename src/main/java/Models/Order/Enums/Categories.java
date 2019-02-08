@@ -2,6 +2,7 @@ package Models.Order.Enums;
 
 public enum Categories {
     
+    DEFAULT(),
     CASUAL( "Casual" ),
     EVENING( "Evening" ),
     SUMMER( "Summer" );
@@ -15,6 +16,11 @@ public enum Categories {
     
     private void setDescription( String description ) {
         this.description = description;
+    }
+    
+    Categories() {
+        this.setNumber( this.ordinal() );
+        this.setDescription( "" );
     }
     
     Categories( String description ) {
