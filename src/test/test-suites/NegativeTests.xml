@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="CreationEmptyAndInvalid" verbose="2">
+<suite name="Negative" verbose="2">
 
-    <test name="NegativeAuthorization">
+    <test name="NegativeCreationAnAccount">
         <classes>
-            <class name="com.automationpractice.Tests.Negative.AccountCreationTest">
+            <class name="com.automationpractice.tests.AccountTests.CreationTest">
                 <methods>
-                    <include name="creationWithEmptyData"/>
-                    <include name="creationWithInvalidData"/>
+                    <include name="testEmptyUserDataCreation"/>
+                    <include name="testInvalidUserDataCreation"/>
+                    <include name="testLongUserDataCreation"/>
                 </methods>
             </class>
         </classes>

@@ -1,0 +1,46 @@
+{
+  "EmptyDataErrors"     : [
+    "You must register at least one phone number." ,
+    "lastname is required." ,
+    "firstname is required." ,
+    "passwd is required." ,
+    "id_country is required." ,
+    "alias is required." ,
+    "address1 is required." ,
+    "city is required." ,
+    "Country cannot be loaded with address->id_country" ,
+    "Country is invalid"
+  ] ,
+  "IncorrectDataErrors" : [
+    "lastname is invalid." ,
+    "firstname is invalid." ,
+    "id_country is required." ,
+    "address1 is invalid." ,
+    "address2 is invalid." ,
+    "postcode is invalid." ,
+    "city is invalid." ,
+    "phone is invalid." ,
+    "phone_mobile is invalid." ,
+    "Country cannot be loaded with address->id_country" ,
+    "The Zip / Postal code is invalid." ,
+    "Country is invalid"
+  ] ,
+  "LongDataErrors"      : [
+    "lastname is invalid." ,
+    "firstname is invalid." ,
+    "passwd is invalid." ,
+    "id_country is required." ,
+    "alias is too long. Maximum length: 32" ,
+    "company is too long. Maximum length: 64" ,
+    "address1 is invalid." ,
+    "address2 is invalid." ,
+    "postcode is invalid." ,
+    "city is invalid." ,
+    "other is too long. Maximum length: 300" ,
+    "phone is invalid." ,
+    "phone_mobile is invalid." ,
+    "Country cannot be loaded with address->id_country" ,
+    "The Zip / Postal code is invalid." ,
+    "Country is invalid"
+  ]
+}

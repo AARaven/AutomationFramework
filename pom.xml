@@ -10,6 +10,8 @@
 
     <properties>
 
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--DEPENDENCY VERSIONS-->
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
         <testng.version>6.14.3</testng.version>
@@ -20,8 +22,7 @@
         <lombok.version>1.18.4</lombok.version>
         <allure-testing.version>2.8.1</allure-testing.version>
         <aspectj.version>1.9.2</aspectj.version>
-
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--DEPENDENCY VERSIONS-->
 
     </properties>
 
@@ -46,21 +47,15 @@
                 <configuration>
 
                     <suiteXmlFiles>
-                        <file>src/test/test-suites/OrderingTests</file>
-                        <!--<file>src/test/test-suites/NegativeTests.xml</file>-->
-                        <!--<file>src/test/test-suites/ElementTests.xml</file>-->
+                        <file>src/test/test-suites/OrderingTests.xml</file>
+                        <file>src/test/test-suites/NegativeTests.xml</file>
                     </suiteXmlFiles>
 
                     <properties>
 
-                        <!--<property>-->
-                            <!--<name>dataproviderthreadcount</name>-->
-                            <!--<value>4</value>-->
-                        <!--</property>-->
-
                         <property>
                             <name>suitethreadpoolsize</name>
-                            <value>3</value>
+                            <value>2</value>
                         </property>
 
                     </properties>

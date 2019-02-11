@@ -1,20 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="OrderingTests" verbose="2"  >
+<suite name="Ordering" verbose="2"  >
 
-    <test name="AddingToCart" >
+    <test name="FilteringCategoriesAndAddingToCart" >
+    <classes>
+
+        <class name="com.automationpractice.tests.AccountTests.AuthorizationTest">
+            <methods>
+                <include name="testAuthorization"/>
+            </methods>
+        </class>
+
+        <class name="com.automationpractice.tests.OrderingTests.CartManageTest">
+            <methods>
+                <include name="testAddingProductsInTheCart"/>
+            </methods>
+        </class>
+
+    </classes>
+</test>
+
+    <test name="VerifyingProductsInTheCart" >
         <classes>
 
-            <class name="com.automationpractice.Tests.Positive.AccountTest">
+            <class name="com.automationpractice.tests.OrderingTests.CartManageTest">
                 <methods>
-                    <include name="testAuthorization"/>
+                    <include name="testVerifyingProductsInTheCart"/>
                 </methods>
             </class>
 
-            <class name="com.automationpractice.Tests.Positive.CartManageTest">
+        </classes>
+    </test>
+
+    <test name="EditingCartContent" >
+        <classes>
+
+            <class name="com.automationpractice.tests.OrderingTests.CartManageTest">
                 <methods>
-                    <include name="testSelectOrder"/>
+                    <include name="testEditingCartContent"/>
                 </methods>
             </class>
 

@@ -1,40 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="AccountAndOrderingTests" verbose="2"  >
+<suite name="AccountTests" verbose="2"  >
 
-    <!--<test name="CreationAnAccount">-->
-        <!--<classes>-->
-            <!--<class name="com.automationpractice.Tests.Positive.AccountTest">-->
-                <!--<methods>-->
-                    <!--<include name="creationAnAccount"/>-->
-                <!--</methods>-->
-            <!--</class>-->
-        <!--</classes>-->
-    <!--</test>-->
-
-    <test name="VerifyingAnAccount" >
+    <test name="CreatingAnAccount">
         <classes>
-            <class name="com.automationpractice.Tests.Positive.AccountTest">
+            <class name="com.automationpractice.tests.AccountTests.AuthorizationTest">
                 <methods>
-                    <include name="testAuthorization"/>
-                    <include name="testVerifyingPersonalInfo"/>
-                    <!--<include name="testAuthorization"/>-->
-                    <!--<include name="verifyAddress"/>-->
+                    <include name="creationAnAccount"/>
                 </methods>
             </class>
         </classes>
     </test>
 
-    <!--<test name="Ordering">-->
-        <!--<classes>-->
-            <!--<class name="com.automationpractice.Tests.Positive.OrderTest">-->
-                <!--<methods>-->
-                    <!--<include name="searchProductAndOrdering"/>-->
-                    <!--<include name="verifyingDownloadedFile"/>-->
-                <!--</methods>-->
-            <!--</class>-->
-        <!--</classes>-->
-    <!--</test>-->
+    <test name="VerifyingAnAccount" >
+        <classes>
+            <class name="com.automationpractice.tests.AccountTests.AuthorizationTest">
+                <methods>
+                    <include name="testAuthorization"/>
+                    <include name="testVerifyingPersonalInfo"/>
+                    <include name="verifyAddress"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
 
 </suite>

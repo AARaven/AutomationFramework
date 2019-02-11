@@ -1,0 +1,27 @@
+{
+  "Order" : {
+    "clothes" : [
+      {
+        "quantity"  : "9" ,
+        "id_number" : "1" ,
+        "name"      : "Faded Short Sleeve T-shirts" ,
+        "size"      : "M" ,
+        "colour"    : "ORANGE"
+      } ,
+      {
+        "quantity"  : "5" ,
+        "id_number" : "2" ,
+        "name"      : "Blouse" ,
+        "size"      : "S" ,
+        "colour"    : "BLACK"
+      } ,
+      {
+        "quantity"  : "45" ,
+        "id_number" : "3" ,
+        "name"      : "Printed Dress" ,
+        "size"      : "M" ,
+        "colour"    : "PINK"
+      }
+    ]
+  }
+}
