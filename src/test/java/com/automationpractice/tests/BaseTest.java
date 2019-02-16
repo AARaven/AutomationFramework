@@ -9,56 +9,55 @@ import org.testng.annotations.*;
 
 import java.io.FileInputStream;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 
 @Log4j2
 @Listeners ( { ScreenShot.class } )
 public abstract class BaseTest {
     
-    private static final String WEBDRIVER_PROPERTIES_PATH =
+    private static final String WEB_DRIVER_PROPERTIES_PATH =
             "./src/main/resources/properties/webdriver.properties";
     
-    private static ThreadLocal < WebDriver > driverThreadLocal =
+    private static final ThreadLocal < WebDriver > WEB_DRIVER_THREAD_LOCAL =
             new ThreadLocal <>();
     
     @SneakyThrows
-    private String getWebDriverProperties( String key ) {
+    private String getProperties( String key ) {
         Properties prop = new Properties();
-        prop.load( new FileInputStream( WEBDRIVER_PROPERTIES_PATH ) );
+        prop.load( new FileInputStream( WEB_DRIVER_PROPERTIES_PATH ) );
         return prop.getProperty( key );
     }
     
     private void setWebDriverProperties() {
         System.setProperty
-                ( getWebDriverProperties( "chromeDriverName" ),
-                  getWebDriverProperties( "chromeDriverPath" ) );
+                ( getProperties( "chromeDriverName" ),
+                  getProperties( "chromeDriverPath" ) );
     }
     
     private void killDriver() {
-        driverThreadLocal.get().manage().deleteAllCookies();
-        driverThreadLocal.get().quit();
-        driverThreadLocal.remove();
+        WEB_DRIVER_THREAD_LOCAL.get().manage().deleteAllCookies();
+        WEB_DRIVER_THREAD_LOCAL.get().quit();
+        WEB_DRIVER_THREAD_LOCAL.remove();
     }
     
     public WebDriver getDriver() {
         
-        WebDriver threadSafeDriver = driverThreadLocal.get();
+        WebDriver threadSafeDriver = WEB_DRIVER_THREAD_LOCAL.get();
         
         if ( threadSafeDriver == null ) {
             
-            this.setWebDriverProperties();
+            setWebDriverProperties();
             
             threadSafeDriver = new ChromeDriver();
-            
-            threadSafeDriver.manage()
-                            .timeouts().implicitlyWait( 7,
-                                                        TimeUnit.SECONDS );
+
+//            threadSafeDriver.manage()
+//                            .timeouts().implicitlyWait( 7,
+//                                                        TimeUnit.SECONDS );
             
             threadSafeDriver.manage()
                             .window().maximize();
             
-            driverThreadLocal.set( threadSafeDriver );
+            WEB_DRIVER_THREAD_LOCAL.set( threadSafeDriver );
             log.debug( "Thread-safe instance of webdriver created." );
         }
         return threadSafeDriver;
@@ -68,14 +67,14 @@ public abstract class BaseTest {
                    enabled = true, alwaysRun = true )
     protected void beforeSuiteMethod() {
         log.debug( "Before suite method : Getting thread-safe instance of webdriver." );
-        this.getDriver();
+        getDriver();
     }
     
     @AfterSuite ( description = "Killing thread-safe instance of webdriver.",
                   enabled = true, alwaysRun = true )
     protected void afterSuiteMethod() {
         log.debug( "Killing thread-safe instance of webdriver." );
-        this.killDriver();
+        killDriver();
     }
     
     @BeforeClass ( description = "Method that run before test class running.",

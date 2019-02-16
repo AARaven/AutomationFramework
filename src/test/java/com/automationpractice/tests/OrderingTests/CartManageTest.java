@@ -12,6 +12,8 @@ import models.order.enums.Colours;
 import models.order.enums.Sizes;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+
 public class CartManageTest extends BaseTest {
     
     @Step ( "Add products to the cart" )
@@ -20,25 +22,28 @@ public class CartManageTest extends BaseTest {
         
         ProductsPage productsPage = new ProductsPage( getDriver() );
         OrderPage    orderPage    = new OrderPage( getDriver() );
-        Clothes      dress        = new Clothes( 5, "2", "Blouse", Sizes.S, Colours.BLACK );
+        
+        Order order = new Order() {{
+            setClothes( new ArrayList < Clothes >() {{
+                add( new Clothes( 1, "Blouse", Sizes.S, Colours.BLACK ) );
+            }} );
+        }};
         
         productsPage
-                .openPage();
+                .open();
         
         productsPage
                 .getFilterForm()
-                .filter( dress )
-                .waitForLoading();
-        
+                .filter( order.getClothes().get( 0 ) )
+                .waitJQueryAJAXCallsHaveCompleted();
+    
         productsPage
                 .getProductForm()
-                .navigateToProduct( dress )
-                .clickAddToCart()
-                .clickButtonProceedToCheckout();
-        
-        orderPage
-                .verifyProducts( 1 )
-                .assertAll();
+                .navigateToProduct( order.getClothes().get( 0 ) )
+                .clickAddToCart();
+    
+        productsPage
+                .verifyAddToCart();
     }
     
     @Step ( "Verify products in the cart" )
@@ -48,23 +53,25 @@ public class CartManageTest extends BaseTest {
         
         ProductsPage productsPage = new ProductsPage( getDriver() );
         OrderPage    orderPage    = new OrderPage( getDriver() );
-        ProductForm  productForm  = new ProductForm( getDriver() );
         
         productsPage
-                .openPage();
+                .open();
         
         for ( Clothes clothes : order.getClothes() ) {
-            productForm
+            
+            productsPage
+                    .getProductForm()
                     .navigateToProduct( clothes )
                     .clickAddToCart()
-                    .clickButtonContinue();
+                    .clickButtonContinue()
+                    .waitJQueryAJAXCallsHaveCompleted();
         }
         
         productsPage
                 .getCartForm()
                 .clickCart();
         
-        orderPage.verifyProducts( order.getClothes().size() )
+        orderPage.verifyProducts( order )
                  .assertAll();
     }
     
@@ -78,7 +85,7 @@ public class CartManageTest extends BaseTest {
         ProductForm  productForm  = new ProductForm( getDriver() );
         
         productsPage
-                .openPage();
+                .open();
         
         
         for ( Clothes clothes : order.getClothes() ) {
@@ -89,21 +96,10 @@ public class CartManageTest extends BaseTest {
         }
         
         orderPage
-                .openPage();
+                .open();
         
         orderPage
-                .addQuantities( order );
-        try {
-            Thread.sleep( 10000 );
-        } catch ( InterruptedException e ) {
-            e.printStackTrace();
-        }
-        
-        orderPage
-                .verifyProducts( order.getClothes()
-                                      .stream()
-                                      .mapToInt( Clothes :: getQuantity )
-                                      .sum() )
+                .verifyProducts( order )
                 .assertAll();
     }
 }

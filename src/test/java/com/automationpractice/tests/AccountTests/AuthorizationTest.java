@@ -2,8 +2,6 @@ package com.automationpractice.tests.AccountTests;
 
 import com.automationpractice.data.UserData;
 import com.automationpractice.site.pages.account.AccountPage;
-import com.automationpractice.site.pages.account.AddressPage;
-import com.automationpractice.site.pages.account.PersonalInfoPage;
 import com.automationpractice.site.pages.authorization.AuthorizationPage;
 import com.automationpractice.tests.BaseTest;
 import io.qameta.allure.Step;
@@ -23,7 +21,7 @@ public class AuthorizationTest extends BaseTest {
         
         //Go to authentication page :
         authentication
-                .openPage();
+                .open();
         
         //Type login and password into text input areas and click 'Sign In' :
         authentication
@@ -49,7 +47,7 @@ public class AuthorizationTest extends BaseTest {
         AccountPage       account        = new AccountPage( getDriver() );
         
         authentication
-                .openPage();
+                .open();
         
         authentication
                 .getLoginForm()

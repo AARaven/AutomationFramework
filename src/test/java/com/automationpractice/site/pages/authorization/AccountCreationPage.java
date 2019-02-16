@@ -9,7 +9,7 @@ import models.user.User;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.FindBys;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
@@ -19,52 +19,9 @@ public class AccountCreationPage extends MainPage {
     
     private static final String ERRORS_JSON_PATH = "./src/main/resources/errors/errors.json";
     
-    @FindBy ( css = ".alert > ol > li" ) private List < WebElement > errorList;
-    
-    public SoftAssert verifyEmptyErrors() {
-        SoftAssert softAssert     = new SoftAssert();
-        String[]   expectedErrors = getJsonAsString( "EmptyDataErrors", ERRORS_JSON_PATH );
-        String[] actualErrors = getErrorList().stream()
-                                              .map( WebElement :: getText )
-                                              .toArray( String[] ::new );
-        
-        for ( int i = 0 ; i < expectedErrors.length ; i++ ) {
-            softAssert.assertEquals( expectedErrors[ i ],
-                                     actualErrors[ i ] );
-        }
-        
-        return softAssert;
-    }
-    
-    public SoftAssert verifyIncorrectDataErrors() {
-        SoftAssert softAssert     = new SoftAssert();
-        String[]   expectedErrors = getJsonAsString( "IncorrectDataErrors", ERRORS_JSON_PATH );
-        String[] actualErrors = getErrorList().stream()
-                                              .map( WebElement :: getText )
-                                              .toArray( String[] ::new );
-        
-        for ( int i = 0 ; i < expectedErrors.length ; i++ ) {
-            softAssert.assertEquals( expectedErrors[ i ],
-                                     actualErrors[ i ] );
-        }
-        
-        return softAssert;
-    }
-    
-    public SoftAssert verifyLongDataErrors() {
-        SoftAssert softAssert     = new SoftAssert();
-        String[]   expectedErrors = getJsonAsString( "LongDataErrors", ERRORS_JSON_PATH );
-        String[] actualErrors = getErrorList().stream()
-                                              .map( WebElement :: getText )
-                                              .toArray( String[] ::new );
-        
-        for ( int i = 0 ; i < expectedErrors.length ; i++ ) {
-            softAssert.assertEquals( expectedErrors[ i ],
-                                     actualErrors[ i ] );
-        }
-        
-        return softAssert;
-    }
+    @FindBys ( { @FindBy ( css = "div.alert-danger" ),
+                 @FindBy ( css = "li" ) } )
+    private List < WebElement > errorList;
     
     public AccountCreationPage fillAddressForm( User user ) {
         new AccountCreationForm( getDriver() )
@@ -75,7 +32,8 @@ public class AccountCreationPage extends MainPage {
                 .sendAddressOne( user.getAddress().getAddress() )
                 .sendAddressTwo( user.getAddress().getAddressSecondLine() )
                 .sendCity( user.getAddress().getCity() )
-                .selectState( Integer.toString( user.getAddress().getState().getNumber() ) )
+                .selectState(
+                        Integer.toString( user.getAddress().getState().getNumber() ) )
                 .sendPostCode( user.getAddress().getZipCode() )
                 .selectCountry( user.getAddress().getCountry() )
                 .sendOther( user.getAdditionalInfo() )
@@ -103,6 +61,57 @@ public class AccountCreationPage extends MainPage {
     
     public AccountPage clickSubmit() {
         return new AccountCreationForm( getDriver() ).clickSubmit();
+    }
+    
+    public SoftAssert verifyEmptyErrors() {
+        
+        SoftAssert softAssert = new SoftAssert();
+        
+        String[] expectedErrors = getJsonToStrings( "EmptyDataErrors", ERRORS_JSON_PATH );
+        String[] actualErrors = getErrorList().stream()
+                                              .map( WebElement :: getText )
+                                              .toArray( String[] ::new );
+        
+        for ( int i = 0 ; i < expectedErrors.length ; i++ ) {
+            softAssert.assertEquals( expectedErrors[ i ],
+                                     actualErrors[ i ] );
+        }
+        
+        return softAssert;
+    }
+    
+    public SoftAssert verifyIncorrectDataErrors() {
+        
+        SoftAssert softAssert = new SoftAssert();
+        
+        String[] expectedErrors = getJsonToStrings( "IncorrectDataErrors", ERRORS_JSON_PATH );
+        String[] actualErrors = getErrorList().stream()
+                                              .map( WebElement :: getText )
+                                              .toArray( String[] ::new );
+        
+        for ( int i = 0 ; i < expectedErrors.length ; i++ ) {
+            softAssert.assertEquals( expectedErrors[ i ],
+                                     actualErrors[ i ] );
+        }
+        
+        return softAssert;
+    }
+    
+    public SoftAssert verifyLongDataErrors() {
+        
+        SoftAssert softAssert = new SoftAssert();
+        
+        String[] expectedErrors = getJsonToStrings( "LongDataErrors", ERRORS_JSON_PATH );
+        String[] actualErrors = getErrorList().stream()
+                                              .map( WebElement :: getText )
+                                              .toArray( String[] ::new );
+        
+        for ( int i = 0 ; i < expectedErrors.length ; i++ ) {
+            softAssert.assertEquals( expectedErrors[ i ],
+                                     actualErrors[ i ] );
+        }
+        
+        return softAssert;
     }
     
     public AccountCreationPage( WebDriver driver ) {

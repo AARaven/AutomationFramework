@@ -28,7 +28,7 @@ public class FrameWorkUtils {
      * @param webElement {@code WebElement} for click on it
      */
     public static void clickWhenClickable( WebDriver driver, WebElement webElement ) {
-        WebDriverWait wait = new WebDriverWait( driver, 5 );
+        WebDriverWait wait = new WebDriverWait( driver, 5,100 );
         wait.until( ExpectedConditions.elementToBeClickable( webElement ) ).click();
     }
 }

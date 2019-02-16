@@ -11,7 +11,6 @@ import models.order.enums.Sizes;
 public class Clothes {
     
     private int     quantity;
-    private String  id_number;
     private String  name;
     private Sizes   size;
     private Colours colour;

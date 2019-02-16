@@ -8,31 +8,38 @@ import lombok.Setter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 
 @Getter ( AccessLevel.PRIVATE )
-public class AuthorizationForm {
+public class LoginForm {
     
     @Setter ( AccessLevel.PRIVATE )
     private WebDriver driver;
     
-    @FindBy ( css = "input[id='email']" )                          private WebElement  inputEmail;
-    @FindBy ( css = "input[id='passwd']" )                         private WebElement  inputPassword;
-    @FindBy ( css = "a[title='Recover your forgotten password']" ) private WebElement  linkRecoverForgottenPassword;
-    @FindBy ( css = "button[id='SubmitLogin']" )                   private WebElement  buttonSubmit;
+    @FindBys ( { @FindBy ( css = "form[id='login_form']" ),
+                 @FindBy ( css = "input[id='email']" ) } )
+    private WebElement inputEmail;
     
-    public AuthorizationForm( WebDriver driver ) {
-        setDriver( driver );
-        PageFactory.initElements( driver, this );
-    }
+    @FindBys ( { @FindBy ( css = "form[id='login_form']" ),
+                 @FindBy ( css = "input[id='passwd']" ) } )
+    private WebElement inputPassword;
     
-    public AuthorizationForm sendEmail( String email ) {
+    @FindBys ( { @FindBy ( css = "form[id='login_form']" ),
+                 @FindBy ( css = "a[title='Recover your forgotten password']" ) } )
+    private WebElement linkRecoverForgottenPassword;
+    
+    @FindBys ( { @FindBy ( css = "form[id='login_form']" ),
+                 @FindBy ( css = "button[id='SubmitLogin']" ) } )
+    private WebElement buttonSubmit;
+    
+    public LoginForm sendEmail( String email ) {
         getInputEmail().clear();
         getInputEmail().sendKeys( email );
         return this;
     }
     
-    public AuthorizationForm sendPassword( String password ) {
+    public LoginForm sendPassword( String password ) {
         getInputPassword().clear();
         getInputPassword().sendKeys( password );
         return this;
@@ -46,5 +53,10 @@ public class AuthorizationForm {
     public AccountPage clickSignIn() {
         getButtonSubmit().click();
         return new AccountPage( getDriver() );
+    }
+    
+    public LoginForm( WebDriver driver ) {
+        setDriver( driver );
+        PageFactory.initElements( driver, this );
     }
 }

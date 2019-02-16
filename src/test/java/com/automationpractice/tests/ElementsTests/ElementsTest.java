@@ -18,7 +18,7 @@ public class ElementsTest extends BaseTest {
         AccountCreationPage creation       = new AccountCreationPage( getDriver() );
         
         authentication
-                .openPage();
+                .open();
         
         authentication
                 .getCreateAccountForm()

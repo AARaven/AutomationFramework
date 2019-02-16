@@ -17,19 +17,17 @@ public class CreationTest extends BaseTest {
             groups = "positive" )
     public void testAccountCreation( User user ) {
         
-        AuthorizationPage   authentication = new AuthorizationPage( getDriver() );
-        AccountCreationPage creation       = new AccountCreationPage( getDriver() );
-        AccountPage         account        = new AccountPage( getDriver() );
+        AuthorizationPage   authorization = new AuthorizationPage( getDriver() );
+        AccountCreationPage creation      = new AccountCreationPage( getDriver() );
+        AccountPage         account       = new AccountPage( getDriver() );
         
         //Go to authentication page :
-        authentication
-                .openPage();
+        authorization.open();
         
         //Type user email and password to text input areas and click 'CreateAccount' :
-        authentication
-                .getCreateAccountForm()
-                .sendEmail( user.getEmail() )
-                .clickSubmit();
+        authorization.getCreateAccountForm()
+                     .sendEmail( user.getEmail() )
+                     .clickSubmit();
         
         //Fill account data and click 'CreateAccount' :
         creation
@@ -38,37 +36,34 @@ public class CreationTest extends BaseTest {
                 .clickSubmit();
         
         //Verifying that account created :
-        account
-                .getAccountRowForm()
-                .verifyUser( user )
-                .assertAll();
+        account.getAccountRowForm()
+               .verifyUser( user )
+               .assertAll();
         
         //Sign out :
-        account
-                .getAccountRowForm()
-                .clickSignOut();
+        account.getAccountRowForm()
+               .clickSignOut();
     }
     
     @Test ( dataProvider = "EmptyUser", dataProviderClass = UserData.class,
             groups = "negative" )
     public void testEmptyUserDataCreation( User user ) {
         
-        AuthorizationPage   authentication = new AuthorizationPage( getDriver() );
-        AccountCreationPage creation       = new AccountCreationPage( getDriver() );
+        AuthorizationPage   authorization = new AuthorizationPage( getDriver() );
+        AccountCreationPage creation      = new AccountCreationPage( getDriver() );
         
-        authentication.openPage();
+        authorization.open();
         
-        authentication
-                .getCreateAccountForm()
-                .sendEmail( user.getEmail() )
-                .clickSubmit();
+        authorization
+                .createUser( user );
         
         creation
                 .fillPersonalInfoForm( user )
                 .fillAddressForm( user )
                 .clickSubmit();
         
-        creation.verifyEmptyErrors()
+        creation
+                .verifyEmptyErrors()
                 .assertAll();
     }
     
@@ -76,21 +71,19 @@ public class CreationTest extends BaseTest {
             groups = "negative" )
     public void testInvalidUserDataCreation( User user ) {
         
-        AuthorizationPage   authentication = new AuthorizationPage( getDriver() );
-        AccountCreationPage creation       = new AccountCreationPage( getDriver() );
+        AuthorizationPage   authorization = new AuthorizationPage( getDriver() );
+        AccountCreationPage creation      = new AccountCreationPage( getDriver() );
         
-        authentication.openPage();
-        
-        authentication
-                .getCreateAccountForm()
-                .sendEmail( user.getEmail() )
-                .clickSubmit();
+        authorization.open();
     
+        authorization
+                .createUser( user );
+        
         creation
                 .fillPersonalInfoForm( user )
                 .fillAddressForm( user )
                 .clickSubmit();
-    
+        
         creation
                 .verifyIncorrectDataErrors()
                 .assertAll();
@@ -99,24 +92,34 @@ public class CreationTest extends BaseTest {
     @Test ( dataProvider = "LongDataUser", dataProviderClass = UserData.class,
             groups = "negative" )
     public void testLongUserDataCreation( User user ) {
-    
-        AuthorizationPage   authentication = new AuthorizationPage( getDriver() );
-        AccountCreationPage creation       = new AccountCreationPage( getDriver() );
-    
-        authentication.openPage();
-    
-        authentication
-                .getCreateAccountForm()
-                .sendEmail( user.getEmail() )
-                .clickSubmit();
-    
+        
+        AuthorizationPage   authorization = new AuthorizationPage( getDriver() );
+        AccountCreationPage creation      = new AccountCreationPage( getDriver() );
+        
+        authorization.open();
+        
+        authorization
+                .createUser( user );
+        
         creation
                 .fillPersonalInfoForm( user )
                 .fillAddressForm( user )
                 .clickSubmit();
+        
+        creation
+                .verifyLongDataErrors()
+                .assertAll();
+    }
     
-       creation
-               .verifyLongDataErrors()
-               .assertAll();
+    @Test
+    public void testInvalidEmailInput() {
+        AuthorizationPage auth = new AuthorizationPage( getDriver() );
+        
+        auth.open();
+        
+        auth.getCreateAccountForm()
+            .sendEmail( "!@#$#@!" )
+            .clickSubmitNegative()
+            .assertAll();
     }
 }

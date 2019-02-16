@@ -6,7 +6,6 @@ import com.automationpractice.site.objects.content.ProductForm;
 import com.automationpractice.site.objects.filter.FilterForm;
 import lombok.AccessLevel;
 import lombok.Getter;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,8 +16,7 @@ import org.testng.asserts.SoftAssert;
 @Getter ( AccessLevel.PRIVATE )
 public class ProductsPage extends MainPage {
     
-    @FindBy ( css = "img[src='http://automationpractice.com/img/loader.gif']" )
-    private WebElement imgLoading;
+    @FindBy ( css = "h2 > i.icon-ok" ) private WebElement textSuccessfuly;
     
     public CartForm getCartForm() {
         return new CartForm( getDriver() );
@@ -36,11 +34,14 @@ public class ProductsPage extends MainPage {
         super( driver );
     }
     
-    public ProductsPage waitForLoading() {
-        new WebDriverWait( getDriver(), 60 )
-                .until( ExpectedConditions.invisibilityOfElementWithText(
-                        By.cssSelector( "img[src='http://automationpractice.com/img/loader.gif']" ),
-                        "Loading..." ) );
-        return this;
+    public SoftAssert verifyAddToCart() {
+        SoftAssert softAssert = new SoftAssert();
+        
+        new WebDriverWait( getDriver(), 5, 100 )
+                .until( ExpectedConditions.visibilityOf( getTextSuccessfuly() ) );
+        
+        softAssert.assertEquals( getTextSuccessfuly().getText(),
+                                 "Product successfully added to your shopping cart" );
+        return softAssert;
     }
 }

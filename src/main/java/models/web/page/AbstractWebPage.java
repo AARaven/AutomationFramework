@@ -1,4 +1,4 @@
-package models.webpage;
+package models.web.page;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -6,8 +6,6 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
@@ -19,34 +17,30 @@ import java.util.Properties;
 
 @Getter ( AccessLevel.PROTECTED )
 @Setter ( AccessLevel.PRIVATE )
-public abstract class BasePage implements WebPage {
+public abstract class AbstractWebPage implements WebPage {
     
     private static final String PROPERTIES_WEB_PAGES_PATH =
             "./src/main/resources/properties/page.properties";
     
-    private URL       url;
-    private WebDriver driver;
-    
-    private String getTitle() {
-        return getDriver().getTitle();
-    }
+    private URL           url;
+    private WebDriver     driver;
     
     @SneakyThrows
-    private String getWebPageProperties( String key ) {
+    private String getProperties( String key ) {
         Properties prop = new Properties();
         prop.load( new FileInputStream( PROPERTIES_WEB_PAGES_PATH ) );
         return prop.getProperty( key );
     }
     
     @SneakyThrows
-    protected BasePage( WebDriver driver ) {
+    protected AbstractWebPage( WebDriver driver ) {
         setDriver( driver );
-        setUrl( new URL( getWebPageProperties( getClass().getSimpleName() ) ) );
+        setUrl( new URL( getProperties( getClass().getSimpleName() ) ) );
         PageFactory.initElements( driver, this );
     }
     
     @SneakyThrows
-    protected String[] getJsonAsString( String key, String path ) {
+    protected String[] getJsonToStrings( String key, String path ) {
         ObjectMapper mapper  = new ObjectMapper();
         String[]     strings;
         HashMap      hashMap = mapper.readValue( new File( path ), HashMap.class );
@@ -54,41 +48,35 @@ public abstract class BasePage implements WebPage {
         return strings;
     }
     
-    protected void navigateToElement( WebElement element ) {
-        new Actions( getDriver() )
-                .moveToElement( element )
-                .build()
-                .perform();
-    }
-    
-    @Override public void nextPage() {
+    @Override public void next() {
         getDriver().navigate().forward();
     }
     
-    @Override public void previousPage() {
+    @Override public void back() {
         getDriver().navigate().back();
     }
     
-    @Override public void refreshPage() {
+    @Override public void refresh() {
         getDriver().navigate().refresh();
     }
     
-    @Override public void openPage() {
-        getDriver().navigate().to( this.getUrl() );
-    }
-    
-    @Override public void openPage( URL url ) {
+    @Override public void open() {
         getDriver().navigate().to( getUrl() );
     }
     
-    @Override public void closePage() {
+    @Override public void open( URL url ) {
+        getDriver().navigate().to( url );
+    }
+    
+    @Override public void close() {
         getDriver().close();
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash( getDriver(),
-                             getUrl() );
+        return Objects.hash( getUrl(),
+                             getDriver() );
+        
     }
     
     @Override
@@ -97,7 +85,7 @@ public abstract class BasePage implements WebPage {
                               "\nURL : %s" +
                               "\nTitle : %s }",
                               getClass().getSimpleName(),
-                              getUrl(),
-                              getTitle() );
+                              getDriver().getCurrentUrl(),
+                              getDriver().getTitle() );
     }
 }

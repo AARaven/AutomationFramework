@@ -7,23 +7,29 @@ import lombok.Setter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 
 @Getter ( AccessLevel.PRIVATE )
-public class PasswordRetrieveForm {
+public class ForgotPasswordForm {
     
     @Setter ( AccessLevel.PRIVATE )
     private WebDriver driver;
     
-    @FindBy ( css = "input[id='email']" )                              private  WebElement inputEmail;
-    @FindBy ( xpath = "//p[@class='submit']//button[@type='submit']" ) private  WebElement buttonRetrievePassword;
+    @FindBys ( { @FindBy ( css = "form[id='form_forgotpassword']" ),
+                 @FindBy ( css = "input[id='email']" ) } )
+    private WebElement inputEmail;
     
-    public PasswordRetrieveForm( WebDriver driver ) {
+    @FindBys ( { @FindBy ( css = "form[id='form_forgotpassword']" ),
+                 @FindBy ( css = "button[type='submit']" ) } )
+    private WebElement buttonRetrievePassword;
+    
+    public ForgotPasswordForm( WebDriver driver ) {
         setDriver( driver );
         PageFactory.initElements( driver, this );
     }
     
-    public PasswordRetrieveForm sendEmail( String email ) {
+    public ForgotPasswordForm sendEmail( String email ) {
         getInputEmail().clear();
         getInputEmail().sendKeys( email );
         return this;

@@ -23,7 +23,7 @@ package com.automationpractice.tests.OrderingTests;//package com.automationpract
 //        AccountPage        account        = new AccountPage( getDriver() );
 //
 //        home
-//                .openPage();
+//                .open();
 //
 //        home
 //                .getSearchFieldForm()
@@ -46,7 +46,7 @@ package com.automationpractice.tests.OrderingTests;//package com.automationpract
 //                .verifyOrderIsComplete()
 //                .assertAll();
 //
-//        account.openPage();
+//        account.open();
 //
 //        account
 //                .clickOrderHistory();

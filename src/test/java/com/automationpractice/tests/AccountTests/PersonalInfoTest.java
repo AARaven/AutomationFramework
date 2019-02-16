@@ -19,7 +19,7 @@ public class PersonalInfoTest extends BaseTest {
         AccountPage      account      = new AccountPage( getDriver() );
         PersonalInfoPage personalInfo = new PersonalInfoPage( getDriver() );
 
-//        account.openPage();
+//        account.open();
 //
         account
                 .clickPersonalInfo();
