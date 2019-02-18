@@ -1,7 +1,8 @@
 package com.automationpractice.site.pages.authorization;
 
 import com.automationpractice.site.MainPage;
-import com.automationpractice.site.objects.registration.AccountCreationForm;
+import com.automationpractice.site.objects.registration.AddressForm;
+import com.automationpractice.site.objects.registration.PersonalInfoForm;
 import com.automationpractice.site.pages.account.AccountPage;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -16,24 +17,26 @@ import java.util.List;
 
 @Getter ( AccessLevel.PRIVATE )
 public class AccountCreationPage extends MainPage {
-    
-    private static final String ERRORS_JSON_PATH = "./src/main/resources/errors/errors.json";
-    
-    @FindBys ( { @FindBy ( css = "div.alert-danger" ),
+
+    private static final String ERRORS_JSON_PATH =
+            "./src/main/resources/errors/errors.json";
+
+    @FindBys ( { @FindBy ( css = "form[id='account-creation_form']" ) ,
+                 @FindBy ( css = "button[id='submitAccount'][name='submitAccount']" ) } )
+    private WebElement          buttonSubmit;
+    @FindBys ( { @FindBy ( css = "div.alert-danger" ) ,
                  @FindBy ( css = "li" ) } )
     private List < WebElement > errorList;
-    
+
     public AccountCreationPage fillAddressForm( User user ) {
-        new AccountCreationForm( getDriver() )
-                .getAddressForm()
+        new AddressForm( getDriver() )
                 .sendFirstName( user.getFirstName() )
                 .sendLastName( user.getLastName() )
                 .sendCompany( user.getAddress().getCompany() )
                 .sendAddressOne( user.getAddress().getAddress() )
                 .sendAddressTwo( user.getAddress().getAddressSecondLine() )
                 .sendCity( user.getAddress().getCity() )
-                .selectState(
-                        Integer.toString( user.getAddress().getState().getNumber() ) )
+                .selectState( Integer.toString( user.getAddress().getState().getNumber() ) )
                 .sendPostCode( user.getAddress().getZipCode() )
                 .selectCountry( user.getAddress().getCountry() )
                 .sendOther( user.getAdditionalInfo() )
@@ -42,10 +45,9 @@ public class AccountCreationPage extends MainPage {
                 .sendAlias( user.getAlias() );
         return this;
     }
-    
+
     public AccountCreationPage fillPersonalInfoForm( User user ) {
-        new AccountCreationForm( getDriver() )
-                .getPersonalInfoForm()
+        new PersonalInfoForm( getDriver() )
                 .setGender( user.getGender() )
                 .sendFirstName( user.getFirstName() )
                 .sendLastName( user.getLastName() )
@@ -58,62 +60,63 @@ public class AccountCreationPage extends MainPage {
                 .setSpecialOffers( user.isSpecialOffers() );
         return this;
     }
-    
+
     public AccountPage clickSubmit() {
-        return new AccountCreationForm( getDriver() ).clickSubmit();
+        getButtonSubmit().click();
+        return new AccountPage( getDriver() );
     }
-    
+
     public SoftAssert verifyEmptyErrors() {
-        
+
         SoftAssert softAssert = new SoftAssert();
-        
-        String[] expectedErrors = getJsonToStrings( "EmptyDataErrors", ERRORS_JSON_PATH );
+
+        String[] expectedErrors = getJsonToStrings( "EmptyDataErrors" , ERRORS_JSON_PATH );
         String[] actualErrors = getErrorList().stream()
                                               .map( WebElement :: getText )
                                               .toArray( String[] ::new );
-        
+
         for ( int i = 0 ; i < expectedErrors.length ; i++ ) {
-            softAssert.assertEquals( expectedErrors[ i ],
+            softAssert.assertEquals( expectedErrors[ i ] ,
                                      actualErrors[ i ] );
         }
-        
+
         return softAssert;
     }
-    
+
     public SoftAssert verifyIncorrectDataErrors() {
-        
+
         SoftAssert softAssert = new SoftAssert();
-        
-        String[] expectedErrors = getJsonToStrings( "IncorrectDataErrors", ERRORS_JSON_PATH );
+
+        String[] expectedErrors = getJsonToStrings( "IncorrectDataErrors" , ERRORS_JSON_PATH );
         String[] actualErrors = getErrorList().stream()
                                               .map( WebElement :: getText )
                                               .toArray( String[] ::new );
-        
+
         for ( int i = 0 ; i < expectedErrors.length ; i++ ) {
-            softAssert.assertEquals( expectedErrors[ i ],
+            softAssert.assertEquals( expectedErrors[ i ] ,
                                      actualErrors[ i ] );
         }
-        
+
         return softAssert;
     }
-    
+
     public SoftAssert verifyLongDataErrors() {
-        
+
         SoftAssert softAssert = new SoftAssert();
-        
-        String[] expectedErrors = getJsonToStrings( "LongDataErrors", ERRORS_JSON_PATH );
+
+        String[] expectedErrors = getJsonToStrings( "LongDataErrors" , ERRORS_JSON_PATH );
         String[] actualErrors = getErrorList().stream()
                                               .map( WebElement :: getText )
                                               .toArray( String[] ::new );
-        
+
         for ( int i = 0 ; i < expectedErrors.length ; i++ ) {
-            softAssert.assertEquals( expectedErrors[ i ],
+            softAssert.assertEquals( expectedErrors[ i ] ,
                                      actualErrors[ i ] );
         }
-        
+
         return softAssert;
     }
-    
+
     public AccountCreationPage( WebDriver driver ) {
         super( driver );
     }

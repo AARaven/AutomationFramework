@@ -8,21 +8,21 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public abstract class MainPage extends AbstractWebPage {
-    
+
     protected MainPage( WebDriver driver ) {
         super( driver );
     }
-    
+
     public AccountRowForm getAccountRowForm() {
         return new AccountRowForm( getDriver() );
     }
-    
+
     public SearchFieldForm getSearchFieldForm() {
         return new SearchFieldForm( getDriver() );
     }
-    
+
     public void waitJQueryAJAXCallsHaveCompleted() {
-        new WebDriverWait( getDriver(), 30, 100 )
+        new WebDriverWait( getDriver() , 30 , 100 )
                 .until( AdditionalConditions.jQueryAJAXCallsHaveCompleted() );
     }
 }

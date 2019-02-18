@@ -12,16 +12,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 @Getter ( AccessLevel.PROTECTED )
 @Setter ( AccessLevel.PRIVATE )
 public abstract class AbstractWebForm {
-    
+
     private WebDriver     driver;
     private WebDriverWait wait;
-    
+
     protected WebElement mainForm;
-    
+
     public AbstractWebForm( WebDriver driver ) {
         setDriver( driver );
-        PageFactory.initElements( driver, this );
-        setWait( new WebDriverWait( driver, 5, 100 ) );
+        setWait( new WebDriverWait( driver , 5 , 100 ) );
+        PageFactory.initElements( driver , this );
         getWait().until( ExpectedConditions.visibilityOf( getMainForm() ) );
     }
 }

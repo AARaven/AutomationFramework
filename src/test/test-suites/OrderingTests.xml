@@ -24,6 +24,12 @@
     <test name="VerifyingProductsInTheCart" >
         <classes>
 
+            <class name="com.automationpractice.tests.AccountTests.AuthorizationTest">
+                <methods>
+                    <include name="testAuthorization"/>
+                </methods>
+            </class>
+
             <class name="com.automationpractice.tests.OrderingTests.CartManageTest">
                 <methods>
                     <include name="testVerifyingProductsInTheCart"/>
@@ -35,6 +41,12 @@
 
     <test name="EditingCartContent" >
         <classes>
+
+            <class name="com.automationpractice.tests.AccountTests.AuthorizationTest">
+                <methods>
+                    <include name="testAuthorization"/>
+                </methods>
+            </class>
 
             <class name="com.automationpractice.tests.OrderingTests.CartManageTest">
                 <methods>

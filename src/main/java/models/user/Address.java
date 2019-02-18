@@ -5,7 +5,7 @@ import models.user.enums.States;
 
 @Data
 public class Address {
-    
+
     private String country;
     private States state;
     private String city;

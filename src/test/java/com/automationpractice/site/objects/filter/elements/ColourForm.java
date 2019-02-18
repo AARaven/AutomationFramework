@@ -1,76 +1,51 @@
 package com.automationpractice.site.objects.filter.elements;
 
 import com.automationpractice.site.objects.filter.FilterForm;
-import com.automationpractice.site.pages.ordering.ProductsPage;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
 import models.order.enums.Colours;
+import models.web.form.AbstractWebForm;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.FindBys;
 
 @Getter ( AccessLevel.PRIVATE )
-public class ColourForm {
-    
-    @Setter ( AccessLevel.PRIVATE )
-    private WebDriver driver;
-    
-    @FindBy ( css = "input[id='layered_id_attribute_group_7']" )  private WebElement checkboxBeige;
-    @FindBy ( css = "input[id='layered_id_attribute_group_8']" )  private WebElement checkboxWhite;
-    @FindBy ( css = "input[id='layered_id_attribute_group_11']" ) private WebElement checkboxBlack;
-    @FindBy ( css = "input[id='layered_id_attribute_group_13']" ) private WebElement checkboxOrange;
-    @FindBy ( css = "input[id='layered_id_attribute_group_14']" ) private WebElement checkboxBlue;
-    @FindBy ( css = "input[id='layered_id_attribute_group_15']" ) private WebElement checkboxGreen;
-    @FindBy ( css = "input[id='layered_id_attribute_group_16']" ) private WebElement checkboxYellow;
-    @FindBy ( css = "input[id='layered_id_attribute_group_24']" ) private WebElement checkboxPink;
-    
+public class ColourForm extends AbstractWebForm {
+
+    @FindBys ( { @FindBy ( css = "ul[id='ul_layered_id_attribute_group_3']" ) ,
+                 @FindBy ( css = "input[id='layered_id_attribute_group_7']" ) } )
+    private WebElement checkboxBeige;
+    @FindBys ( { @FindBy ( css = "ul[id='ul_layered_id_attribute_group_3']" ) ,
+                 @FindBy ( css = "input[id='layered_id_attribute_group_8']" ) } )
+    private WebElement checkboxWhite;
+    @FindBys ( { @FindBy ( css = "ul[id='ul_layered_id_attribute_group_3']" ) ,
+                 @FindBy ( css = "input[id='layered_id_attribute_group_11']" ) } )
+    private WebElement checkboxBlack;
+    @FindBys ( { @FindBy ( css = "ul[id='ul_layered_id_attribute_group_3']" ) ,
+                 @FindBy ( css = "input[id='layered_id_attribute_group_13']" ) } )
+    private WebElement checkboxOrange;
+    @FindBys ( { @FindBy ( css = "ul[id='ul_layered_id_attribute_group_3']" ) ,
+                 @FindBy ( css = "input[id='layered_id_attribute_group_14']" ) } )
+    private WebElement checkboxBlue;
+    @FindBys ( { @FindBy ( css = "ul[id='ul_layered_id_attribute_group_3']" ) ,
+                 @FindBy ( css = "input[id='layered_id_attribute_group_15']" ) } )
+    private WebElement checkboxGreen;
+    @FindBys ( { @FindBy ( css = "ul[id='ul_layered_id_attribute_group_3']" ) ,
+                 @FindBy ( css = "input[id='layered_id_attribute_group_16']" ) } )
+    private WebElement checkboxYellow;
+    @FindBys ( { @FindBy ( css = "ul[id='ul_layered_id_attribute_group_3']" ) ,
+                 @FindBy ( css = "input[id='layered_id_attribute_group_24']" ) } )
+    private WebElement checkboxPink;
+
+    @FindBy ( css = "ul[id='ul_layered_id_attribute_group_3']" )
+    @Getter ( AccessLevel.PROTECTED )
+    protected WebElement mainForm;
+
     public ColourForm( WebDriver driver ) {
-        setDriver( driver );
-        PageFactory.initElements( driver, this );
+        super( driver );
     }
-    
-    public ProductsPage clickCheckboxBeige() {
-        getCheckboxBeige().click();
-        return new ProductsPage( getDriver() );
-    }
-    
-    public ProductsPage clickCheckboxWhite() {
-        getCheckboxWhite().click();
-        return new ProductsPage( getDriver() );
-    }
-    
-    public ProductsPage clickCheckboxBlack() {
-        getCheckboxBlack().click();
-        return new ProductsPage( getDriver() );
-    }
-    
-    public ProductsPage clickCheckboxOrange() {
-        getCheckboxOrange().click();
-        return new ProductsPage( getDriver() );
-    }
-    
-    public ProductsPage clickCheckboxBlue() {
-        getCheckboxBlue().click();
-        return new ProductsPage( getDriver() );
-    }
-    
-    public ProductsPage clickCheckboxGreen() {
-        getCheckboxGreen().click();
-        return new ProductsPage( getDriver() );
-    }
-    
-    public ProductsPage clickCheckboxYellow() {
-        getCheckboxYellow().click();
-        return new ProductsPage( getDriver() );
-    }
-    
-    public ProductsPage clickCheckboxPink() {
-        getCheckboxPink().click();
-        return new ProductsPage( getDriver() );
-    }
-    
+
     public FilterForm filter( Colours colours ) {
         switch ( colours ) {
             case DEFAULT:

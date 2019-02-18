@@ -1,46 +1,36 @@
 package com.automationpractice.site.objects.filter.elements;
 
 import com.automationpractice.site.objects.filter.FilterForm;
-import com.automationpractice.site.pages.ordering.ProductsPage;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
 import models.order.enums.Sizes;
+import models.web.form.AbstractWebForm;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.FindBys;
 
 @Getter ( AccessLevel.PRIVATE )
-public class SizeForm {
-    
-    @Setter ( AccessLevel.PRIVATE )
-    private WebDriver driver;
-    
-    @FindBy ( css = "input[id='layered_id_attribute_group_1']" ) private WebElement checkboxSmall;
-    @FindBy ( css = "input[id='layered_id_attribute_group_2']" ) private WebElement checkboxMedium;
-    @FindBy ( css = "input[id='layered_id_attribute_group_3']" ) private WebElement checkboxLarge;
-    
+public class SizeForm extends AbstractWebForm {
+
+    @FindBys ( { @FindBy ( css = "ul[id='ul_layered_id_attribute_group_1']" ) ,
+                 @FindBy ( css = "input[id='layered_id_attribute_group_1']" ) } )
+    private WebElement checkboxSmall;
+    @FindBys ( { @FindBy ( css = "ul[id='ul_layered_id_attribute_group_1']" ) ,
+                 @FindBy ( css = "input[id='layered_id_attribute_group_2']" ) } )
+    private WebElement checkboxMedium;
+    @FindBys ( { @FindBy ( css = "ul[id='ul_layered_id_attribute_group_1']" ) ,
+                 @FindBy ( css = "input[id='layered_id_attribute_group_3']" ) } )
+    private WebElement checkboxLarge;
+
+    @FindBy ( css = "ul[id='ul_layered_id_attribute_group_1']" )
+    @Getter ( AccessLevel.PROTECTED )
+    protected WebElement mainForm;
+
     public SizeForm( WebDriver driver ) {
-        setDriver( driver );
-        PageFactory.initElements( driver, this );
+        super( driver );
     }
-    
-    public ProductsPage clickCheckboxSmall() {
-        getCheckboxSmall().click();
-        return new ProductsPage( getDriver() );
-    }
-    
-    public ProductsPage clickCheckboxMedium() {
-        getCheckboxMedium().click();
-        return new ProductsPage( getDriver() );
-    }
-    
-    public ProductsPage clickCheckboxLarge() {
-        getCheckboxLarge().click();
-        return new ProductsPage( getDriver() );
-    }
-    
+
     public FilterForm filter( Sizes sizes ) {
         switch ( sizes ) {
             case DEFAULT:

@@ -1,12 +1,12 @@
 package models.user;
 
+import lombok.Data;
 import models.user.enums.Genders;
 import models.user.enums.Months;
-import lombok.Data;
 
 @Data
 public class User {
-    
+
     private Genders gender;
     private String  firstName;
     private String  lastName;

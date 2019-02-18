@@ -2,22 +2,68 @@
   "Order" : {
     "clothes" : [
       {
-        "quantity"  : "9" ,
-        "name"      : "Faded Short Sleeve T-shirts" ,
-        "size"      : "M" ,
-        "colour"    : "ORANGE"
+        "quantity" : "9" ,
+        "name"     : "Faded Short Sleeve T-shirts" ,
+        "size"     : "M" ,
+        "colour"   : "ORANGE"
       } ,
       {
-        "quantity"  : "5" ,
-        "name"      : "Blouse" ,
-        "size"      : "S" ,
-        "colour"    : "BLACK"
+        "quantity" : "15" ,
+        "name"     : "Blouse" ,
+        "size"     : "S" ,
+        "colour"   : "BLACK"
       } ,
       {
-        "quantity"  : "45" ,
-        "name"      : "Printed Dress" ,
-        "size"      : "M" ,
-        "colour"    : "PINK"
+        "quantity" : "13" ,
+        "name"     : "Printed Dress" ,
+        "size"     : "M" ,
+        "colour"   : "PINK"
+      } ,
+      {
+        "quantity" : "9" ,
+        "name"     : "Printed Chiffon Dress" ,
+        "size"     : "M" ,
+        "colour"   : "ORANGE"
+      } ,
+      {
+        "quantity" : "11" ,
+        "name"     : "Printed Summer Dress" ,
+        "size"     : "S" ,
+        "colour"   : "BLACK"
+      }
+    ]
+  },
+  "OrderForVerifying" : {
+    "clothes" : [
+      {
+        "quantity" : "1" ,
+        "name"     : "Faded Short Sleeve T-shirts" ,
+        "size"     : "M" ,
+        "colour"   : "ORANGE"
+      } ,
+      {
+        "quantity" : "1" ,
+        "name"     : "Blouse" ,
+        "size"     : "S" ,
+        "colour"   : "BLACK"
+      } ,
+      {
+        "quantity" : "1" ,
+        "name"     : "Printed Dress" ,
+        "size"     : "M" ,
+        "colour"   : "PINK"
+      } ,
+      {
+        "quantity" : "1" ,
+        "name"     : "Printed Chiffon Dress" ,
+        "size"     : "M" ,
+        "colour"   : "ORANGE"
+      } ,
+      {
+        "quantity" : "1" ,
+        "name"     : "Printed Summer Dress" ,
+        "size"     : "S" ,
+        "colour"   : "BLACK"
       }
     ]
   }

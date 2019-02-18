@@ -4,18 +4,19 @@ import com.automationpractice.site.objects.filter.elements.*;
 import com.automationpractice.site.pages.ordering.ProductsPage;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
 import models.order.Clothes;
 import models.order.Filter;
+import models.web.form.AbstractWebForm;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-public class FilterForm {
-    
-    @Getter ( AccessLevel.PRIVATE )
-    @Setter ( AccessLevel.PRIVATE )
-    private WebDriver driver;
-    
+public class FilterForm extends AbstractWebForm {
+
+    @FindBy ( css = "form[id='layered_form']" )
+    @Getter ( AccessLevel.PROTECTED )
+    protected WebElement mainForm;
+
     public ProductsPage filter( Clothes clothes ) {
         new ColourForm( getDriver() )
                 .filter( clothes.getColour() );
@@ -23,7 +24,7 @@ public class FilterForm {
                 .filter( clothes.getSize() );
         return new ProductsPage( getDriver() );
     }
-    
+
     public ProductsPage filter( Filter filter ) {
         new AvailabilityForm( getDriver() )
                 .filter( filter.getAvailabilities() );
@@ -45,9 +46,8 @@ public class FilterForm {
                 .filter( filter.getStyles() );
         return new ProductsPage( getDriver() );
     }
-    
+
     public FilterForm( WebDriver driver ) {
-        setDriver( driver );
-        PageFactory.initElements( driver, this );
+        super( driver );
     }
 }

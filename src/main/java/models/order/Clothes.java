@@ -8,8 +8,9 @@ import models.order.enums.Sizes;
 @Getter ( AccessLevel.PUBLIC )
 @NoArgsConstructor ( access = AccessLevel.PUBLIC )
 @AllArgsConstructor ( access = AccessLevel.PUBLIC )
+@Builder
 public class Clothes {
-    
+
     private int     quantity;
     private String  name;
     private Sizes   size;

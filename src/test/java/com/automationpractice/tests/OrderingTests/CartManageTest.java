@@ -15,91 +15,114 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 
 public class CartManageTest extends BaseTest {
-    
+
     @Step ( "Add products to the cart" )
     @Test ( description = "Test that implements filtering categories and adding to cart." )
     public void testAddingProductsInTheCart() {
-        
+
         ProductsPage productsPage = new ProductsPage( getDriver() );
-        OrderPage    orderPage    = new OrderPage( getDriver() );
-        
+
         Order order = new Order() {{
+
             setClothes( new ArrayList < Clothes >() {{
-                add( new Clothes( 1, "Blouse", Sizes.S, Colours.BLACK ) );
+
+                add( Clothes.builder()
+                            .name( "Blouse" )
+                            .size( Sizes.S )
+                            .colour( Colours.BLACK )
+                            .quantity( 1 )
+                            .build() );
+
             }} );
+
         }};
-        
+
         productsPage
                 .open();
-        
+
         productsPage
                 .getFilterForm()
                 .filter( order.getClothes().get( 0 ) )
                 .waitJQueryAJAXCallsHaveCompleted();
-    
+
         productsPage
                 .getProductForm()
                 .navigateToProduct( order.getClothes().get( 0 ) )
-                .clickAddToCart();
-    
+                .clickAddToCart()
+                .verifyThatProductAddedToCart()
+                .assertAll();
+
         productsPage
-                .verifyAddToCart();
+                .getAccountRowForm()
+                .clickSignOut();
     }
-    
+
     @Step ( "Verify products in the cart" )
     @Test ( description = "",
-            dataProvider = "Order", dataProviderClass = OrderData.class )
+            dataProvider = "OrderForVerifying", dataProviderClass = OrderData.class )
     public void testVerifyingProductsInTheCart( Order order ) {
-        
+
         ProductsPage productsPage = new ProductsPage( getDriver() );
         OrderPage    orderPage    = new OrderPage( getDriver() );
-        
+
         productsPage
                 .open();
-        
+
         for ( Clothes clothes : order.getClothes() ) {
-            
+
             productsPage
                     .getProductForm()
                     .navigateToProduct( clothes )
                     .clickAddToCart()
-                    .clickButtonContinue()
-                    .waitJQueryAJAXCallsHaveCompleted();
+                    .clickButtonContinue();
         }
-        
+
         productsPage
                 .getCartForm()
                 .clickCart();
-        
+
         orderPage.verifyProducts( order )
                  .assertAll();
+
+        orderPage
+                .getAccountRowForm()
+                .clickSignOut();
     }
-    
+
     @Step ( "Editing the cart content" )
     @Test ( description = "",
             dataProvider = "Order", dataProviderClass = OrderData.class )
     public void testEditingCartContent( Order order ) {
-        
+
         ProductsPage productsPage = new ProductsPage( getDriver() );
         OrderPage    orderPage    = new OrderPage( getDriver() );
-        ProductForm  productForm  = new ProductForm( getDriver() );
-        
+
         productsPage
                 .open();
-        
-        
+
         for ( Clothes clothes : order.getClothes() ) {
-            productForm
+            productsPage
+                    .getProductForm()
                     .navigateToProduct( clothes )
                     .clickAddToCart()
                     .clickButtonContinue();
         }
-        
+
         orderPage
                 .open();
-        
+
+        orderPage
+                .setClothesQuantity( order );
+
+        orderPage
+                .waitJQueryAJAXCallsHaveCompleted();
+
         orderPage
                 .verifyProducts( order )
                 .assertAll();
+
+        orderPage
+                .getAccountRowForm()
+                .clickSignOut();
     }
 }

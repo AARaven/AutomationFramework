@@ -31,32 +31,38 @@ public abstract class AbstractWebTable implements WebTable {
                 .findElement( By.cssSelector( "tfoot" ) );
     }
     
+    @Override
     public List < List < WebElement > > getHeaderContainer() {
         return getHeader().findElements( By.cssSelector( "tr" ) ).stream()
                           .map( webElement -> webElement.findElements( By.cssSelector( "th" ) ) )
                           .collect( Collectors.toList() );
     }
     
+    @Override
     public List < List < WebElement > > getBodyContainer() {
         return getBody().findElements( By.cssSelector( "tr" ) ).stream()
                         .map( webElement -> webElement.findElements( By.cssSelector( "td" ) ) )
                         .collect( Collectors.toList() );
     }
     
+    @Override
     public List < List < WebElement > > getFooterContainer() {
         return getFooter().findElements( By.cssSelector( "tr" ) ).stream()
                           .map( webElement -> webElement.findElements( By.cssSelector( "td" ) ) )
                           .collect( Collectors.toList() );
     }
     
+    @Override
     public WebElement getHeaderCell( int row, int col ) {
         return getHeaderContainer().get( row ).get( col );
     }
     
+    @Override
     public WebElement getBodyCell( int row, int col ) {
         return getBodyContainer().get( row ).get( col );
     }
     
+    @Override
     public WebElement getFooterCell( int row, int col ) {
         return getFooterContainer().get( row ).get( col );
     }

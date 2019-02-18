@@ -1,47 +1,63 @@
 package com.automationpractice.site.objects.content;
 
-import com.automationpractice.site.pages.ordering.ProductsPage;
 import com.automationpractice.site.pages.ordering.OrderPage;
+import com.automationpractice.site.pages.ordering.ProductsPage;
 import com.automationpractice.utils.FrameWorkUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
+import models.web.form.AbstractWebForm;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.FindBys;
+import org.testng.asserts.SoftAssert;
 
 @Getter ( AccessLevel.PRIVATE )
-public class AddCartForm {
-    
-    @Setter ( AccessLevel.PRIVATE )
-    private WebDriver driver;
-    
-    @Setter(AccessLevel.PRIVATE)
-    private WebDriverWait webDriverWait;
-    
-    @FindBy ( css = "span[title='Continue shopping']" ) private  WebElement buttonContinue;
-    @FindBy ( css = "a[title='Proceed to checkout']" )  private  WebElement buttonProceedToCheckout;
-    @FindBy ( css = "span[title='Close window']" )      private  WebElement buttonClose;
-    
+public class AddCartForm extends AbstractWebForm {
+
+    @FindBys ( { @FindBy ( css = "div[id='layer_cart'" ) ,
+                 @FindBy ( css = "span[title='Continue shopping']" ) } )
+    private WebElement buttonContinue;
+    @FindBys ( { @FindBy ( css = "div[id='layer_cart'" ) ,
+                 @FindBy ( css = "a[title='Proceed to checkout']" ) } )
+    private WebElement buttonProceedToCheckout;
+    @FindBys ( { @FindBy ( css = "div[id='layer_cart'" ) ,
+                 @FindBy ( css = "span[title='Close window']" ) } )
+    private WebElement buttonClose;
+    @FindBys ( { @FindBy ( css = "div[id='layer_cart'" ) ,
+                 @FindBy ( css = "div.layer_cart_product" ) ,
+                 @FindBy ( css = "h2" ) } )
+    private WebElement textSuccessfullyAddedToCart;
+
+    @FindBy ( css = "div[id='layer_cart'" )
+    @Getter ( AccessLevel.PROTECTED )
+    protected WebElement mainForm;
+
     public ProductsPage clickButtonContinue() {
-        FrameWorkUtils.clickWhenClickable( getDriver(), getButtonContinue() );
+        FrameWorkUtils.clickWhenClickable( getDriver() , getButtonContinue() );
         return new ProductsPage( getDriver() );
     }
-    
+
     public ProductsPage clickButtonClose() {
-        FrameWorkUtils.clickWhenClickable( getDriver(), getButtonClose() );
+        FrameWorkUtils.clickWhenClickable( getDriver() , getButtonClose() );
         return new ProductsPage( getDriver() );
     }
-    
+
     public OrderPage clickButtonProceedToCheckout() {
-        FrameWorkUtils.clickWhenClickable( getDriver(), getButtonProceedToCheckout() );
+        FrameWorkUtils.clickWhenClickable( getDriver() , getButtonContinue() );
         return new OrderPage( getDriver() );
     }
-    
+
+    public SoftAssert verifyThatProductAddedToCart() {
+        SoftAssert softAssert = new SoftAssert();
+
+        softAssert.assertEquals( getTextSuccessfullyAddedToCart().getText() ,
+                                 "Product successfully added to your shopping cart" );
+        getButtonClose().click();
+        return softAssert;
+    }
+
     public AddCartForm( WebDriver driver ) {
-        setDriver( driver );
-        PageFactory.initElements( driver , this );
+        super( driver );
     }
 }
