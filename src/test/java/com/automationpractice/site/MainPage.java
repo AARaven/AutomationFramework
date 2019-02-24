@@ -22,7 +22,7 @@ public abstract class MainPage extends AbstractWebPage {
     }
 
     public void waitJQueryAJAXCallsHaveCompleted() {
-        new WebDriverWait( getDriver() , 30 , 100 )
+        new WebDriverWait( getDriver() , 60 , 100 )
                 .until( AdditionalConditions.jQueryAJAXCallsHaveCompleted() );
     }
 }
