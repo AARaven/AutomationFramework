@@ -7,14 +7,14 @@ pipeline {
         stage ('Compilation stage') {
 
             steps {
-                maven_3_6_0 'clean compile'
+                maven 'clean compile'
             }
         }
 
         stage ('Testing stage') {
 
             steps {
-                 maven_3_6_0 'clean test'
+                 maven 'clean test'
             }
         }
     }
