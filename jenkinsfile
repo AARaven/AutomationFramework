@@ -2,10 +2,6 @@ pipeline {
 
     agent any
 
-    tools {
-        maven_3_6_0 'mvn'
-    }
-
     stages {
 
         stage ('version stage') {
