@@ -7,14 +7,16 @@ pipeline {
         stage ('Compilation stage') {
 
             steps {
-                    bat '%MAVEN_HOME%\bin\mvn clean compile'
+                bat '%MAVEN_HOME%\bin'
+                bat 'mvn clean compile'
             }
         }
 
         stage ('Testing stage') {
 
             steps {
-                    bat '%MAVEN_HOME%\bin\mvn clean test'
+                bat '%MAVEN_HOME%\bin'
+                bat 'mvn clean test'
             }
         }
     }
