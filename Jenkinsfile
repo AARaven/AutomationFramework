@@ -11,6 +11,6 @@ node {
     }
 
     stage('Test stage') {
-        bat "${mvnHome}\\bin/\\mvn test"
+        bat "${mvnHome}\\bin\\mvn test"
     }
 }
