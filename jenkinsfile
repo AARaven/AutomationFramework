@@ -7,21 +7,21 @@ pipeline {
         stage ('version stage') {
 
             steps {
-                echo 'mvn --version'
+                bat 'mvn --version'
             }
         }
 
         stage ('Compilation stage') {
 
             steps {
-                maven_3_6_0 'clean compile'
+                bat 'mvn clean compile'
             }
         }
 
         stage ('Testing stage') {
 
             steps {
-                 maven_3_6_0 'clean test'
+                 bat 'mvn clean test'
             }
         }
     }
