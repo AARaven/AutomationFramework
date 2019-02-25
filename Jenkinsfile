@@ -2,29 +2,25 @@ pipeline {
 
     agent any
 
-    tool name: 'mvn', type: 'maven'
-
     stages {
 
-        stage ('version stage') {
-
+        stage('version stage') {
             steps {
                 bat 'mvn --version'
             }
         }
 
-        stage ('Compilation stage') {
-
+        stage('Compilation stage') {
             steps {
                 bat 'mvn clean compile'
             }
         }
 
-        stage ('Testing stage') {
-
+        stage('Testing stage') {
             steps {
-                 bat 'mvn clean test'
+                bat 'mvn clean test'
             }
         }
     }
+
 }
