@@ -6,6 +6,6 @@ node {
 
     stage('Compilation stage') {
         def mvnHome = tool name: 'Maven-3.6.0', type: 'maven'
-        sh "${mvnHome}/bin/mvn compile"
+        bat 'sh "${mvnHome}/bin/mvn compile"'
     }
 }
