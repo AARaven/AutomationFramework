@@ -4,6 +4,7 @@ node {
 
     stage('SCM checkout stage') {
         git: 'https://github.com/AARaven/AutomationFramework.git'
+        sh "git clone 'https://github.com/AARaven/AutomationFramework.git' /var/lib/tomcat8/.jenkins/workspace/automationpractice/"
     }
 
     stage('Compilation stage') {
